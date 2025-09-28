@@ -16,7 +16,7 @@ public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
         Configuration.browser = "chrome";
         Configuration.headless = false;
         Configuration.browserSize = "1920x1080";

@@ -11,10 +11,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'com.codeborne:selenide:6.19.1'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'com.codeborne:selenide:7.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation 'org.assertj:assertj-core:3.27.4'
     testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
     testImplementation 'io.qameta.allure:allure-selenide:2.24.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
 }
 
 test {

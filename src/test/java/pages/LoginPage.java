@@ -29,7 +29,13 @@ public class LoginPage {
         loginButton.click();
     }
 
-    public boolean isProfileButtonPresent() {
-        return $x("//a[@data-qa-id='profile_page_button']");
+    public MoviesPage login(String email, String password) {
+        openLoginPage();
+        enterEmail(email);
+        enterPassword(password);
+        clickLoginButton();
+
+        MoviesPage moviesPage = new MoviesPage();
+        return moviesPage.navigateToAllMoviesPage();
     }
 }
