@@ -12,7 +12,7 @@ public class TicketPurchaseTest {
     @Test
     public void testTicketPurchase() {
         TicketSteps ticketSteps = new TicketSteps();
-        boolean success = ticketSteps.purcaseTicketAndVerify("Механик");
+        boolean success = ticketSteps.purhaseTicketAndVerify("Механик");
             assertThat(success).isTrue();
     }
 }

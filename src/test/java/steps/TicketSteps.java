@@ -19,12 +19,12 @@ public class TicketSteps {
             .clickConfirmButton();
     }
 
-    public boolean purcaseTicketAndVerify(String movieName) {
+    public boolean purhaseTicketAndVerify(String movieName) {
         purchuaseTicketForMovie(movieName);
 
         PaymentPage paymentPage = new PaymentPage();
         boolean success = paymentPage.isPaymentSuccessful();
-        System.out.println("Оплата прошла успешна: " + movieName);
+        System.out.println("Оплата прошла успешна для фильма: " + movieName);
         return success;
     }
 }
