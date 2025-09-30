@@ -8,13 +8,13 @@ public class ReviewSteps {
         System.out.println("Создаем отзыв для фильма: " + movieName);
 
         new MoviesPage()
-            .selectMovie("Титаник")
+            .selectMovie("Во все тяжкие")
             .writeReviewAndMakeARate("Очень крутой фильм, всем советую", 5)
             .submitReview();
         }
 
     public boolean isReviewExist(String reviewText) {
-        publishReview("Титаник");
+        publishReview("Во все тяжкие");
 
         MoviePage moviePage = new MoviePage();
         boolean isReviewExist = moviePage.reviewIsExists(reviewText);

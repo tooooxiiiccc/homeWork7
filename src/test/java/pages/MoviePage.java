@@ -50,4 +50,9 @@ public class MoviePage {
         return this;
     }
 
+    public boolean reviewIsExists(String reviewText) {
+        reviewList.shouldBe(visible).shouldHave(text(reviewText));
+        return true;
+    }
+
 }
