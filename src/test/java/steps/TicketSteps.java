@@ -5,22 +5,22 @@ import pages.PaymentPage;
 
 public class TicketSteps {
 
-    public void purchuaseTicketForMovie(String movieName) {
+    public boolean purchuaseTicketForMovie(String movieName, String ticket, String cardNumber, String cardOwner, String month, String year, String cvc) {
         System.out.println("Выбираем и покупаем фильм: " + movieName);
 
         new MoviesPage()
             .selectMovie(movieName)
             .clickBuyTicketButton()
-            .setTicketInput("1")
-            .enterCardInput("4242424242424242")
-            .enterCardOwnerInput("John Doe")
-            .enterExpiryDate("Декабрь", "2025")
-            .enterCvcInput("123")
+            .setTicketInput(ticket)
+            .enterCardInput(cardNumber)
+            .enterCardOwnerInput(cardOwner)
+            .enterExpiryDate(month, year)
+            .enterCvcInput(cvc)
             .clickConfirmButton();
+        return false;
     }
 
-    public boolean purhaseTicketAndVerify(String movieName) {
-        purchuaseTicketForMovie(movieName);
+    public boolean purhaseTicketAndVerify(String movieName, String ticket, String cardNumber, String cardOwner, String month, String year, String cvc) {
 
         PaymentPage paymentPage = new PaymentPage();
         boolean success = paymentPage.isPaymentSuccessful();
