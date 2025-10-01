@@ -11,7 +11,7 @@ public class TicketSteps {
         new MoviesPage()
             .selectMovie(movieName)
             .clickBuyTicketButton()
-            .enterTicketInput("1")
+            .setTicketInput("1")
             .enterCardInput("4242424242424242")
             .enterCardOwnerInput("John Doe")
             .enterExpiryDate("Декабрь", "2025")
@@ -24,7 +24,11 @@ public class TicketSteps {
 
         PaymentPage paymentPage = new PaymentPage();
         boolean success = paymentPage.isPaymentSuccessful();
-        System.out.println("Оплата прошла успешна для фильма: " + movieName);
+        if (success) {
+            System.out.println("Оплата прошла успешно для фильма: " + movieName);
+        } else {
+            System.out.println("Оплата не прошла, повторите попытку!");
+        }
         return success;
     }
 }

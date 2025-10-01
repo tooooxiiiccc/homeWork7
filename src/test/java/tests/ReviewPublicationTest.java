@@ -1,21 +1,17 @@
 package tests;
 
 import junit.UITest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import steps.ReviewSteps;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import steps.MoviePageSteps;
 
 
 @UITest
 public class ReviewPublicationTest {
     @Test
-    public void reviewPublication() {
-    }
-
-    @Test
+    @DisplayName("Проверка публикации отзыва и остается ли он на сайте")
     public void reviewIsExsists(){
-        ReviewSteps steps = new ReviewSteps();
-        boolean reviewSuccess = steps.isReviewExist("Очень крутой фильм, всем советую");
-        assertThat(reviewSuccess).isTrue();
+        MoviePageSteps steps = new MoviePageSteps();
+        steps.publishReviewAndVerify("Титаник", "Фильм супер, ставлю ",5);
     }
 }

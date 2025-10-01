@@ -29,7 +29,7 @@ public class LoginPage {
         loginButton.click();
     }
 
-    public MoviesPage login(String email, String password) {
+    public MoviesPage makeALogin(String email, String password) {
         openLoginPage();
         enterEmail(email);
         enterPassword(password);
