@@ -1,15 +1,15 @@
 package steps;
 
-import pages.MoviePage;
-import pages.MoviesPage;
+import pages.MoviePageAndReviewTicket;
+import pages.MoviesPageAndFilters;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MoviePageSteps {
-    private final MoviePage moviePage = new MoviePage();
+    private final MoviePageAndReviewTicket moviePage = new MoviePageAndReviewTicket();
 
     public MoviePageSteps publishReviewAndVerify(String movieName, String review, int rating) {
         System.out.println("Создаем отзыв для фильма: " + movieName);
-        new MoviesPage()
+        new MoviesPageAndFilters()
             .selectMovie(movieName)
             .writeReviewAndMakeARate(review, rating)
             .submitReview()

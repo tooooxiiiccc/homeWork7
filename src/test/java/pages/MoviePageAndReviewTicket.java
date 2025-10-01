@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class MoviePage {
+public class MoviePageAndReviewTicket {
     private SelenideElement buyTicketButton = $x("//button[.//p[contains(text(), 'Купить билет')]]");
     private SelenideElement textAreaInput = $x("//textarea[@data-qa-id='movie_review_input']");
     private SelenideElement movieRateButton = $x("//span[@data-qa-id='movie_rating_select']/parent::button");
@@ -18,7 +18,7 @@ public class MoviePage {
         return new PaymentPage();
     }
 
-    public MoviePage writeReviewAndMakeARate(String review, int rating) {
+    public MoviePageAndReviewTicket writeReviewAndMakeARate(String review, int rating) {
         textAreaInput.setValue(review);
         movieRateButton.click();
         SelenideElement dropdown = $x("//div[@role='listbox']").shouldBe(visible, Duration.ofSeconds(10));
@@ -26,7 +26,7 @@ public class MoviePage {
         return this;
     }
 
-    public MoviePage submitReview() {
+    public MoviePageAndReviewTicket submitReview() {
         submitReview.click();
         sleep(5000);
         return this;
@@ -41,7 +41,7 @@ public class MoviePage {
         }
     }
 
-    public MoviePage verifyReviewDisplayed(String review) {
+    public MoviePageAndReviewTicket verifyReviewDisplayed(String review) {
         assertThat(isReviewExists(review))
             .as("Отзыв с текстом '%s' должен отображаться на странице", review)
             .isTrue();

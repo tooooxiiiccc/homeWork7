@@ -29,13 +29,13 @@ public class LoginPage {
         loginButton.click();
     }
 
-    public MoviesPage makeALogin(String email, String password) {
+    public MoviesPageAndFilters makeALogin(String email, String password) {
         openLoginPage();
         enterEmail(email);
         enterPassword(password);
         clickLoginButton();
 
-        MoviesPage moviesPage = new MoviesPage();
+        MoviesPageAndFilters moviesPage = new MoviesPageAndFilters();
         return moviesPage.navigateToAllMoviesPage();
     }
 }

@@ -1,6 +1,10 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
 
@@ -43,8 +47,7 @@ public class PaymentPage {
     }
 
     public PaymentPage clickConfirmButton() {
-        paymentSubmitButton.click();
-        sleep(10000);
+        paymentSubmitButton.shouldBe(visible, Duration.ofSeconds(10)).click();
         return this;
     }
 

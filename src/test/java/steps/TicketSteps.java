@@ -1,6 +1,6 @@
 package steps;
 
-import pages.MoviesPage;
+import pages.MoviesPageAndFilters;
 import pages.PaymentPage;
 
 public class TicketSteps {
@@ -8,7 +8,7 @@ public class TicketSteps {
     public boolean purchuaseTicketForMovie(String movieName, String ticket, String cardNumber, String cardOwner, String month, String year, String cvc) {
         System.out.println("Выбираем и покупаем фильм: " + movieName);
 
-        new MoviesPage()
+        new MoviesPageAndFilters()
             .selectMovie(movieName)
             .clickBuyTicketButton()
             .setTicketInput(ticket)
