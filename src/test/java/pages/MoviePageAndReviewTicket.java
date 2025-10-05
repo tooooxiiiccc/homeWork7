@@ -1,6 +1,8 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+
 import java.time.Duration;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
@@ -13,11 +15,13 @@ public class MoviePageAndReviewTicket {
     private SelenideElement movieRateButton = $x("//span[@data-qa-id='movie_rating_select']/parent::button");
     private SelenideElement submitReview = $x("//button[@data-qa-id='movie_review_submit_button']");
 
+    @Step("Нажать на кнопку оплаты: ")
     public PaymentPage clickBuyTicketButton() {
         buyTicketButton.shouldBe(visible, Duration.ofSeconds(10)).click();
         return new PaymentPage();
     }
 
+    @Step("Написать отзыв и выбрать оценку для фильма: {'movieName'} ")
     public MoviePageAndReviewTicket writeReviewAndMakeARate(String review, int rating) {
         textAreaInput.setValue(review);
         movieRateButton.click();
@@ -26,12 +30,14 @@ public class MoviePageAndReviewTicket {
         return this;
     }
 
+    @Step("Нажать на кнопку отправить отзыв ")
     public MoviePageAndReviewTicket submitReview() {
         submitReview.click();
         sleep(5000);
         return this;
     }
 
+    @Step("Проверить, что отзыв оставлен на странице: '{review}'")
     public boolean isReviewExists(String review) {
         try {
             $x("//*[contains(text(), '" + review + "')]").shouldBe(visible, Duration.ofSeconds(10));
@@ -41,6 +47,7 @@ public class MoviePageAndReviewTicket {
         }
     }
 
+    @Step("Подтвердить соответствие написанного отзыва, отображаемому")
     public MoviePageAndReviewTicket verifyReviewDisplayed(String review) {
         assertThat(isReviewExists(review))
             .as("Отзыв с текстом '%s' должен отображаться на странице", review)

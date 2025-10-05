@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import java.time.Duration;
 
@@ -18,21 +19,25 @@ public class PaymentPage {
     private SelenideElement paymentSubmitButton = $x("//button[@data-qa-id='payment_submit_button']");
     private SelenideElement successMessage = $x("//p[contains(text(), 'Спасибо за покупку')]");
 
+    @Step("Ввести кол-во билетов")
     public PaymentPage setTicketInput(String ticket) {
         paymentAmountInput.setValue(ticket);
         return this;
     }
 
+    @Step("Ввести номер карты")
     public PaymentPage enterCardInput(String cardNumber) {
         paymentCardNumberInput.setValue(cardNumber);
         return this;
     }
 
+    @Step("Ввести имя владельца карты")
     public PaymentPage enterCardOwnerInput(String cardOwner) {
         paymentCardHolderInput.setValue(cardOwner);
         return this;
     }
 
+    @Step("Выбрать дату окончания действия карты")
     public PaymentPage enterExpiryDate(String month, String year) {
         paymentCardMonthSelect.click();
         $x("//span[contains(text(), '" + month + "')]").click();
@@ -41,11 +46,13 @@ public class PaymentPage {
         return this;
     }
 
+    @Step("Ввести CVC-код от карты")
     public PaymentPage enterCvcInput(String cvc) {
         cvcInput.setValue(cvc);
         return this;
     }
 
+    @Step("Нажать на кнопку Оплатить")
     public PaymentPage clickConfirmButton() {
         paymentSubmitButton.shouldBe(visible, Duration.ofSeconds(10)).click();
         return this;
@@ -60,7 +67,7 @@ public class PaymentPage {
 //    }
 
     public boolean isPaymentSuccessful() {
-        boolean success = successMessage.exists();
+        boolean success = successMessage.shouldBe(visible, Duration.ofSeconds(10)).exists();
         return success;
     }
 }

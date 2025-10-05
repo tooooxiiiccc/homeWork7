@@ -1,13 +1,13 @@
 package steps;
 
+import io.qameta.allure.Step;
 import pages.MoviesPageAndFilters;
 import pages.PaymentPage;
 
 public class TicketSteps {
-
+    
+    @Step("Выбираем и покупаем фильм: {movieName}")
     public boolean purchuaseTicketForMovie(String movieName, String ticket, String cardNumber, String cardOwner, String month, String year, String cvc) {
-        System.out.println("Выбираем и покупаем фильм: " + movieName);
-
         new MoviesPageAndFilters()
             .selectMovie(movieName)
             .clickBuyTicketButton()
@@ -19,9 +19,9 @@ public class TicketSteps {
             .clickConfirmButton();
         return false;
     }
-
-    public boolean purhaseTicketAndVerify(String movieName, String ticket, String cardNumber, String cardOwner, String month, String year, String cvc) {
-
+    
+    @Step("Подтвердить, что оплата прошла успешно")
+    public boolean purhaseTicketAndVerify(String movieName) {
         PaymentPage paymentPage = new PaymentPage();
         boolean success = paymentPage.isPaymentSuccessful();
         if (success) {

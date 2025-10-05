@@ -14,8 +14,8 @@ public class TicketPurchaseTest {
     @DisplayName("Проверка покупки билета")
     public void testTicketPurchase() {
         TicketSteps ticketSteps = new TicketSteps();
-        ticketSteps.purchuaseTicketForMovie("Механик", "2", "4242424242424242", "John Doe", "Декабрь", "2025", "123");
-        boolean success = ticketSteps.purhaseTicketAndVerify("Механик", "2", "4242424242424242", "John Doe", "Декабрь", "2025", "123");
+        ticketSteps.purchuaseTicketForMovie("Титаник", "2", "4242424242424242", "John Doe", "Декабрь", "2025", "123");
+        boolean success = ticketSteps.purhaseTicketAndVerify("Титаник");
             assertThat(success).isTrue();
     }
 }
