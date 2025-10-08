@@ -2,12 +2,9 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-
 import java.time.Duration;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.sleep;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class MoviePageAndReviewTicket {
     private SelenideElement buyTicketButton = $x("//button[.//p[contains(text(), 'Купить билет')]]");
@@ -22,7 +19,7 @@ public class MoviePageAndReviewTicket {
     }
 
     @Step("Написать отзыв и выбрать оценку для фильма: {'movieName'} ")
-    public MoviePageAndReviewTicket writeReviewAndMakeARate(String review, int rating) {
+    public MoviePageAndReviewTicket setRate(String review, int rating) {
         textAreaInput.setValue(review);
         movieRateButton.click();
         SelenideElement dropdown = $x("//div[@role='listbox']").shouldBe(visible, Duration.ofSeconds(10));
@@ -32,38 +29,13 @@ public class MoviePageAndReviewTicket {
 
     @Step("Нажать на кнопку отправить отзыв ")
     public MoviePageAndReviewTicket submitReview() {
-        submitReview.click();
-        sleep(5000);
+        submitReview.shouldBe(visible, Duration.ofSeconds(10)).click();
         return this;
     }
 
     @Step("Проверить, что отзыв оставлен на странице: '{review}'")
     public boolean isReviewExists(String review) {
-        try {
-            $x("//*[contains(text(), '" + review + "')]").shouldBe(visible, Duration.ofSeconds(10));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        $x("//*[contains(text(), '" + review + "')]").shouldBe(visible, Duration.ofSeconds(10));
+        return true;
     }
-
-    @Step("Подтвердить соответствие написанного отзыва, отображаемому")
-    public MoviePageAndReviewTicket verifyReviewDisplayed(String review) {
-        assertThat(isReviewExists(review))
-            .as("Отзыв с текстом '%s' должен отображаться на странице", review)
-            .isTrue();
-        System.out.println("Отзыв соответствует оставленному ранее");
-        return this;
-    }
-
-//    public MoviePage verifyRating(int rating) {
-//        reviewList.shouldHave(text(String.valueOf(rating)));
-//        return this;
-//    }
-//
-//    public MoviePage verifyAuthorName(String authorName) {
-//        reviewList.shouldBe(visible).shouldHave(text(authorName));
-//        return this;
-//    }
-
 }

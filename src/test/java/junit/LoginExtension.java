@@ -1,21 +1,14 @@
 package junit;
 
+import Utils.ConfigReader;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import steps.AuthSteps;
+import steps.LoginSteps;
 
 public class LoginExtension implements BeforeEachCallback {
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        System.out.println("Login Extension: Начало логина");
-        try {
-            AuthSteps authSteps = new AuthSteps();
-            authSteps.loginToMoviesPage();
-            System.out.println("Login Extension: Логин успешен");
-        } catch (Exception e) {
-            System.out.println("Login Extension: Ошибка логина");
-            e.printStackTrace();
-        }
+        new LoginSteps().login();
     }
 }
