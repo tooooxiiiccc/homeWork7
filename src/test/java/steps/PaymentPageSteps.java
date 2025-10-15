@@ -1,17 +1,30 @@
 package steps;
 
 import io.qameta.allure.Step;
-import pages.MoviePageAndReviewTicket;
-import pages.MoviesPageAndFilters;
+import pages.MoviePage;
+import pages.AllMoviesPage;
 import pages.PaymentPage;
 
-public class PaymentPageSteps {
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-    @Step("Сценарий покупки билета")
-    public void purchuaseTicket(String movieName, String ticket, String cardNumber, String cardHolder, String expiryMonth, String expiryYear, String cvc) {
-        MoviesPageAndFilters moviesPageAndFilters = new MoviesPageAndFilters().navigateToAllMoviesPage();
-        MoviePageAndReviewTicket moviePageAndReviewTicket = moviesPageAndFilters.selectMovie(movieName);
-        PaymentPage paymentPage = moviePageAndReviewTicket.clickBuyTicketButton();
+public class PaymentPageSteps {
+    private final AllMoviesPage moviesPage = new AllMoviesPage();
+    private final MoviePage moviePage = new MoviePage();
+    private final PaymentPage paymentPage = new PaymentPage();
+
+    @Step("Открыть страницу со всеми фильмами")
+    public void openAllMoviesPage(){
+        moviesPage.open();
+    }
+
+    @Step("Выбрать фильм и нажать кнопку оплаты")
+    public void selectMovie(String movieName){
+        moviesPage.selectMovie(movieName);
+        moviePage.clickBuyTicketButton();
+    }
+
+    @Step("Выбрать кол-во билетов и заполнить форму страницы с оплатой")
+    public void purchaseTicket(String ticket, String cardNumber, String cardHolder, String expiryMonth, String expiryYear, String cvc) {
         paymentPage
             .setTicket(ticket)
             .setCard(cardNumber)
@@ -21,15 +34,8 @@ public class PaymentPageSteps {
             .clickConfirmButton();
     }
 
-    @Step("Быстрая покупка билета")
-    public void quickPayment(String movieName) {
-        purchuaseTicket(
-            movieName,
-            "2",
-            "4242424242424242",
-            "John Doe",
-            "Декабрь", "2025",
-            "123"
-        );
+    @Step("Проверить, что оплата прошла успешно")
+    public void verifyPurchase() {
+        assertThat(paymentPage.isPaymentSuccessful()).isTrue();
     }
 }

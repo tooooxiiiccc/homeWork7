@@ -1,26 +1,30 @@
 package steps;
 
 import io.qameta.allure.Step;
-import pages.MoviesPageAndFilters;
+import pages.AllMoviesPage;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class MoviePageAndFiltersSteps {
-    @Step("Переходим на страницу со всеми фильмами и выбираем фильтры и проверяем, что фильтры отображаются")
+public class AllMoviesPageSteps {
+    private final AllMoviesPage allMoviesPage = new AllMoviesPage();
+
+    @Step("Открываем страницу")
+    public void open() {
+        allMoviesPage.open();
+    }
+
+    @Step("Выбираем фильтры и проверяем")
     public void setFilters(String city, String genre, String date) {
-        MoviesPageAndFilters moviesPageAndFilters = new MoviesPageAndFilters().navigateToAllMoviesPage();
-        moviesPageAndFilters
+        allMoviesPage
             .filterCityLocation(city)
             .filterGenre(genre)
             .filterDateOfBirth(date);
-        verifyFilters(city, genre, date);
     }
 
     @Step("Проверить выбранные фильтры")
     public void verifyFilters(String expectedCity, String expectedGenre, String expectedDateOfBirth) {
-        MoviesPageAndFilters moviesPageAndFilters = new MoviesPageAndFilters();
-        String actualCity = moviesPageAndFilters.getCityLocationText();
-        String actualGenre = moviesPageAndFilters.getGenreLocationText();
-        String actualDate = moviesPageAndFilters.getDateLocationText();
+        String actualCity = allMoviesPage.getCityLocationText();
+        String actualGenre = allMoviesPage.getGenreLocationText();
+        String actualDate = allMoviesPage.getDateLocationText();
 
         assertThat(actualCity)
             .as(expectedCity)

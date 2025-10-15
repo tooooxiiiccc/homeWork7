@@ -8,7 +8,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class MoviesPageAndFilters {
+public class AllMoviesPage {
     private SelenideElement moviesFilterLocationSelect = $x("//button[.//span[@data-qa-id='movies_filter_location_select']]");
     private SelenideElement moviesFilterGenreSelect = $x("(//button[@role='combobox'])[2]");
     private SelenideElement moviesFilterDateAnounce = $x("(//button[@role='combobox'])[3]");
@@ -17,13 +17,13 @@ public class MoviesPageAndFilters {
     private SelenideElement selectedDateText = $x("(//button[@role='combobox'])[3]//span");
 
     @Step("Переходим на страницу со всеми фильмами")
-    public MoviesPageAndFilters navigateToAllMoviesPage() {
+    public AllMoviesPage open() {
         $x("//a[contains(text(), 'Все фильмы')]").shouldBe(visible, Duration.ofSeconds(10)).click();
         return this;
     }
 
     @Step("Выбираем город: ")
-    public MoviesPageAndFilters filterCityLocation(String city) {
+    public AllMoviesPage filterCityLocation(String city) {
         moviesFilterLocationSelect
             .shouldBe(visible, Duration.ofSeconds(10)).click();
         $x("//div[@role='listbox']//span[contains(text(), '" + city + "')]")
@@ -32,7 +32,7 @@ public class MoviesPageAndFilters {
     }
 
     @Step("Выбираем жанр: ")
-    public MoviesPageAndFilters filterGenre(String genre) {
+    public AllMoviesPage filterGenre(String genre) {
         moviesFilterGenreSelect
             .shouldBe(visible, Duration.ofSeconds(10)).click();
         $x("//div[@role='listbox']//span[contains(text(), '" + genre + "')]")
@@ -41,7 +41,7 @@ public class MoviesPageAndFilters {
     }
 
     @Step("Выбираем дату выхода: ")
-    public MoviesPageAndFilters filterDateOfBirth(String createDate) {
+    public AllMoviesPage filterDateOfBirth(String createDate) {
         moviesFilterDateAnounce
             .shouldBe(visible, Duration.ofSeconds(10)).click();
         $x("//div[@role='listbox']//span[contains(text(), '" + createDate + "')]")
@@ -50,9 +50,9 @@ public class MoviesPageAndFilters {
     }
 
     @Step("Выбираем фильм: ")
-    public MoviePageAndReviewTicket selectMovie(String movieName) {
+    public MoviePage selectMovie(String movieName) {
         $x("//h3[contains(text(), '" + movieName + "')]").shouldBe(visible, Duration.ofSeconds(10)).click();
-        return new MoviePageAndReviewTicket();
+        return new MoviePage();
     }
 
     @Step("Получить текст выбранного города")

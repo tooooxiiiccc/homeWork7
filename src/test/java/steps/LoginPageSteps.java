@@ -3,9 +3,8 @@ package steps;
 import Utils.ConfigReader;
 import io.qameta.allure.Step;
 import pages.LoginPage;
-import pages.MoviesPageAndFilters;
 
-public class LoginSteps {
+public class LoginPageSteps {
     @Step("Залогиниться на CineScope")
     public void login() {
         String email = ConfigReader.getEmail();

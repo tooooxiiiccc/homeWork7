@@ -1,14 +1,12 @@
 package junit;
 
-import Utils.ConfigReader;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import steps.LoginSteps;
-
+import steps.LoginPageSteps;
 public class LoginExtension implements BeforeEachCallback {
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        new LoginSteps().login();
+        new LoginPageSteps().login();
     }
 }

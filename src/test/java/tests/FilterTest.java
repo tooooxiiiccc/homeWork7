@@ -3,13 +3,19 @@ package tests;
 import io.qameta.allure.Step;
 import junit.UITest;
 import org.junit.jupiter.api.Test;
-import steps.MoviePageAndFiltersSteps;
+import steps.AllMoviesPageSteps;
 
 @UITest
 public class FilterTest {
+    private final AllMoviesPageSteps allMoviesPageSteps = new AllMoviesPageSteps();
     @Test
     @Step("Сценарий проверки работы фильтров")
     public void testFilter() {
-        new MoviePageAndFiltersSteps().setFilters("MSK", "Криминал", "Новые");
+        String city = "MSK";
+        String genre = "Криминал";
+        String date = "Новые";
+        allMoviesPageSteps.open();
+        allMoviesPageSteps.setFilters(city, genre, date);
+        allMoviesPageSteps.verifyFilters(city, genre, date);
     }
 }

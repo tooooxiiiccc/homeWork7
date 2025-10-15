@@ -6,7 +6,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class MoviePageAndReviewTicket {
+public class MoviePage {
     private SelenideElement buyTicketButton = $x("//button[.//p[contains(text(), 'Купить билет')]]");
     private SelenideElement textAreaInput = $x("//textarea[@data-qa-id='movie_review_input']");
     private SelenideElement movieRateButton = $x("//span[@data-qa-id='movie_rating_select']/parent::button");
@@ -19,7 +19,7 @@ public class MoviePageAndReviewTicket {
     }
 
     @Step("Написать отзыв и выбрать оценку для фильма: {'movieName'} ")
-    public MoviePageAndReviewTicket setRate(String review, int rating) {
+    public MoviePage setRate(String review, int rating) {
         textAreaInput.setValue(review);
         movieRateButton.click();
         SelenideElement dropdown = $x("//div[@role='listbox']").shouldBe(visible, Duration.ofSeconds(10));
@@ -28,7 +28,7 @@ public class MoviePageAndReviewTicket {
     }
 
     @Step("Нажать на кнопку отправить отзыв ")
-    public MoviePageAndReviewTicket submitReview() {
+    public MoviePage submitReview() {
         submitReview.shouldBe(visible, Duration.ofSeconds(10)).click();
         return this;
     }
