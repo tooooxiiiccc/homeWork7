@@ -4,13 +4,17 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import java.time.Duration;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class MoviePage {
     private SelenideElement buyTicketButton = $x("//button[.//p[contains(text(), 'Купить билет')]]");
-    private SelenideElement textAreaInput = $x("//textarea[@data-qa-id='movie_review_input']");
+    private SelenideElement textAreaInput = $("textarea[data-qa-id='movie_review_input']");
     private SelenideElement movieRateButton = $x("//span[@data-qa-id='movie_rating_select']/parent::button");
     private SelenideElement submitReview = $x("//button[@data-qa-id='movie_review_submit_button']");
+    private SelenideElement btnReviewMenu = $(".lucide-ellipsis-vertical");
+    private SelenideElement reviewDeleteOption = $("div[data-qa-id*='delete']");
+
 
     @Step("Нажать на кнопку оплаты: ")
     public PaymentPage clickBuyTicketButton() {
@@ -37,5 +41,12 @@ public class MoviePage {
     public boolean isReviewExists(String review) {
         $x("//*[contains(text(), '" + review + "')]").shouldBe(visible, Duration.ofSeconds(10));
         return true;
+    }
+
+    @Step("Удаление отзыва")
+    public MoviePage deleteReview() {
+        btnReviewMenu.click();
+        reviewDeleteOption.click();
+        return this;
     }
 }
