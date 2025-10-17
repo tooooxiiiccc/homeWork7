@@ -7,6 +7,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class AllMoviesPageSteps {
     private final AllMoviesPage allMoviesPage = new AllMoviesPage();
 
+    @Step("Открыть страницу со всеми фильмами")
+    public void openAllMoviesPage(){
+        allMoviesPage.open();
+    }
+
+    @Step("Выбрать фильм")
+    public void pickMovie(String movieName){
+        allMoviesPage.selectMovie(movieName);
+    }
+
     @Step("Выбираем фильтры и проверяем")
     public void setFilters(String city, String genre, String date) {
         allMoviesPage
