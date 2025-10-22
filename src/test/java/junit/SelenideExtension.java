@@ -1,5 +1,6 @@
 package junit;
 
+import Utils.ConfigReader;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -16,7 +17,8 @@ public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
+        Configuration.baseUrl = ConfigReader.getBaseUrl();
         Configuration.browser = "chrome";
         Configuration.headless = false;
         Configuration.browserSize = "1920x1080";
