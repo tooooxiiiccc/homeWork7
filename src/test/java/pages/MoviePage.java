@@ -2,7 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import java.time.Duration;
+import utils.Timeouts;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
@@ -15,35 +15,33 @@ public class MoviePage {
     private SelenideElement btnReviewMenu = $(".lucide-ellipsis-vertical");
     private SelenideElement reviewDeleteOption = $("div[data-qa-id*='delete']");
 
-
-    @Step("Нажать на кнопку оплаты: ")
+    @Step("Нажать на кнопку оплаты")
     public PaymentPage clickBuyTicketButton() {
-        buyTicketButton.shouldBe(visible, Duration.ofSeconds(10)).click();
+        buyTicketButton.shouldBe(visible, Timeouts.DEFAULT).click();
         return new PaymentPage();
     }
 
-    @Step("Написать отзыв и выбрать оценку для фильма: {'movieName'} ")
+    @Step("Написать отзыв: {review} и выбрать оценку: {rating}")
     public MoviePage setRate(String review, int rating) {
         textAreaInput.setValue(review);
         movieRateButton.click();
-        SelenideElement dropdown = $x("//div[@role='listbox']").shouldBe(visible, Duration.ofSeconds(10));
+        SelenideElement dropdown = $x("//div[@role='listbox']").shouldBe(visible, Timeouts.DEFAULT);
         dropdown.$x(".//*[text()='" + rating + "']").click();
         return this;
     }
 
-    @Step("Нажать на кнопку отправить отзыв ")
+    @Step("Нажать на кнопку отправить отзыв")
     public MoviePage submitReview() {
-        submitReview.shouldBe(visible, Duration.ofSeconds(10)).click();
+        submitReview.shouldBe(visible, Timeouts.DEFAULT).click();
         return this;
     }
 
-    @Step("Проверить, что отзыв оставлен на странице: '{review}'")
-    public boolean isReviewExists(String review) {
-        $x("//*[contains(text(), '" + review + "')]").shouldBe(visible, Duration.ofSeconds(10));
-        return true;
+    @Step("Проверить, что отзыв существует на странице: {review}")
+    public void verifyReviewExists(String review) {
+        $x("//*[contains(text(), '" + review + "')]").shouldBe(visible, Timeouts.DEFAULT);
     }
 
-    @Step("Удаление отзыва")
+    @Step("Удалить отзыв")
     public MoviePage deleteReview() {
         btnReviewMenu.click();
         reviewDeleteOption.click();

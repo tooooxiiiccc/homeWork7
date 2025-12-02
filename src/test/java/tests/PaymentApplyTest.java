@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import steps.AllMoviesPageSteps;
 import steps.MoviePageSteps;
 import steps.PaymentPageSteps;
+import utils.PaymentData;
+import utils.TestData;
 
 @UITest
 public class PaymentApplyTest {
@@ -16,10 +18,11 @@ public class PaymentApplyTest {
     @Test
     @DisplayName("Проверка покупки билета")
     public void testTicketPurchase() {
+        PaymentData paymentData = PaymentData.defaultPaymentData();
         allMoviesPageSteps.openAllMoviesPage();
-        allMoviesPageSteps.pickMovie("Няшки");
+        allMoviesPageSteps.pickMovie(TestData.MOVIE_NAME);
         moviePageSteps.clickBuyButton();
-        paymentPageSteps.purchaseTicket("2", "4242424242424242", "John Doe", "Декабрь", "2025", "123");
+        paymentPageSteps.purchaseTicket(paymentData);
         paymentPageSteps.verifyPurchase();
     }
 }

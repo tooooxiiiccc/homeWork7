@@ -3,7 +3,7 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import java.time.Duration;
+import utils.Timeouts;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -21,7 +21,7 @@ public class LoginPage {
 
     @Step("Открыть страницу логина")
     public LoginPage openLoginPage() {
-        loginPageButton.shouldBe(Condition.visible, Duration.ofSeconds(5)).click();
+        loginPageButton.shouldBe(Condition.visible, Timeouts.SHORT).click();
         return this;
     }
 
@@ -32,7 +32,7 @@ public class LoginPage {
         return this;
     }
 
-    @Step("Ввести пароль: {password}")
+    @Step("Ввести пароль")
     public LoginPage setPassword(String password) {
         passwordInput.shouldBe(Condition.visible);
         passwordInput.setValue(password);

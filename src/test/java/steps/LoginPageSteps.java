@@ -1,6 +1,6 @@
 package steps;
 
-import Utils.ConfigReader;
+import utils.ConfigReader;
 import io.qameta.allure.Step;
 import pages.LoginPage;
 

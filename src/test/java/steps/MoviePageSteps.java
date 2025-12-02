@@ -10,11 +10,15 @@ public class MoviePageSteps {
         moviePage.clickBuyTicketButton();
     }
 
-    @Step("Написать отзыв к фильму")
-    public void submitReviewText(String reviewText, int rate) {
+    @Step("Написать отзыв к фильму: {reviewText} с оценкой {rate}")
+    public void submitReview(String reviewText, int rate) {
         moviePage.setRate(reviewText, rate);
         moviePage.submitReview();
-        moviePage.isReviewExists(reviewText);
+    }
+
+    @Step("Проверить, что отзыв существует: {reviewText}")
+    public void verifyReviewExists(String reviewText) {
+        moviePage.verifyReviewExists(reviewText);
     }
 
     @Step("Удалить отзыв")
