@@ -7,7 +7,6 @@ import steps.AllMoviesPageSteps;
 import steps.MoviePageSteps;
 import steps.PaymentPageSteps;
 import utils.PaymentData;
-import utils.TestData;
 
 @UITest
 public class PaymentApplyTest {
@@ -20,7 +19,7 @@ public class PaymentApplyTest {
     public void testTicketPurchase() {
         PaymentData paymentData = PaymentData.defaultPaymentData();
         allMoviesPageSteps.openAllMoviesPage();
-        allMoviesPageSteps.pickMovie(TestData.MOVIE_NAME);
+        allMoviesPageSteps.pickFirstMovie();
         moviePageSteps.clickBuyButton();
         paymentPageSteps.purchaseTicket(paymentData);
         paymentPageSteps.verifyPurchase();

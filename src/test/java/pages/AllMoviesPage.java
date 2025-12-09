@@ -49,7 +49,15 @@ public class AllMoviesPage {
 
     @Step("Выбрать фильм: {movieName}")
     public MoviePage selectMovie(String movieName) {
-        $x("//h3[contains(text(), '" + movieName + "')]").shouldBe(visible, Timeouts.DEFAULT).click();
+        $x("//a[contains(@data-qa-id, 'movie_more_') and .//h3[contains(text(), '" + movieName + "')]]")
+            .shouldBe(visible, Timeouts.DEFAULT).click();
+        return new MoviePage();
+    }
+
+    @Step("Выбрать первый доступный фильм")
+    public MoviePage selectFirstMovie() {
+        $x("(//a[contains(@data-qa-id, 'movie_more_')])[1]")
+            .shouldBe(visible, Timeouts.DEFAULT).click();
         return new MoviePage();
     }
 

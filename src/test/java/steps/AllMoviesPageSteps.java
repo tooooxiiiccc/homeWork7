@@ -13,9 +13,9 @@ public class AllMoviesPageSteps {
         allMoviesPage.open();
     }
 
-    @Step("Выбрать фильм: {movieName}")
-    public void pickMovie(String movieName){
-        allMoviesPage.selectMovie(movieName);
+    @Step("Выбрать первый доступный фильм")
+    public void pickFirstMovie(){
+        allMoviesPage.selectFirstMovie();
     }
 
     @Step("Выбрать фильтры: город={city}, жанр={genre}, дата={date}")

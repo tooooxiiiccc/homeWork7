@@ -23,4 +23,3 @@ public class FilterData {
         return date;
     }
 }
-

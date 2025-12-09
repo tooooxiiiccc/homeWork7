@@ -18,7 +18,7 @@ public class ReviewPublicationTest {
     @Step("Сценарий проверки оставления отзыва и его отображения и удаление")
     public void reviewExists() {
         allMoviesPageSteps.openAllMoviesPage();
-        allMoviesPageSteps.pickMovie(TestData.MOVIE_NAME);
+        allMoviesPageSteps.pickFirstMovie();
         moviePageSteps.submitReview(TestData.REVIEW_TEXT, TestData.REVIEW_RATING);
         moviePageSteps.verifyReviewExists(TestData.REVIEW_TEXT);
         moviePageSteps.deleteReview();
