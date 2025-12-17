@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import steps.AllMoviesPageSteps;
 import steps.MoviePageSteps;
+import utils.TestData;
 
 @UITest
 public class ReviewPublicationTest {
@@ -15,10 +16,11 @@ public class ReviewPublicationTest {
     @Test
     @DisplayName("Проверка публикации отзыва и остается ли он на сайте")
     @Step("Сценарий проверки оставления отзыва и его отображения и удаление")
-    public void reviewIsExsists() {
+    public void reviewExists() {
         allMoviesPageSteps.openAllMoviesPage();
-        allMoviesPageSteps.pickMovie("Няшки");
-        moviePageSteps.submitReviewText("Супер фильм, всем советую, братва", 5);
+        allMoviesPageSteps.pickFirstMovie();
+        moviePageSteps.submitReview(TestData.REVIEW_TEXT, TestData.REVIEW_RATING);
+        moviePageSteps.verifyReviewExists(TestData.REVIEW_TEXT);
         moviePageSteps.deleteReview();
     }
 }

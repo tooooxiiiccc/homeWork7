@@ -2,7 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import java.time.Duration;
+import utils.Timeouts;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -16,7 +16,7 @@ public class PaymentPage {
     private SelenideElement paymentSubmitButton = $x("//button[@data-qa-id='payment_submit_button']");
     private SelenideElement successMessage = $x("//p[contains(text(), 'Спасибо за покупку')]");
 
-    @Step("Ввести кол-во билетов")
+    @Step("Ввести количество билетов: {ticket}")
     public PaymentPage setTicket(String ticket) {
         paymentAmountInput.setValue(ticket);
         return this;
@@ -28,13 +28,13 @@ public class PaymentPage {
         return this;
     }
 
-    @Step("Ввести имя владельца карты")
+    @Step("Ввести имя владельца карты: {cardHolder}")
     public PaymentPage setCardHolder(String cardHolder) {
         paymentCardHolderInput.setValue(cardHolder);
         return this;
     }
 
-    @Step("Выбрать дату окончания действия карты")
+    @Step("Выбрать дату окончания действия карты: {month} {year}")
     public PaymentPage setExpiryDate(String month, String year) {
         paymentCardMonthSelect.click();
         $x("//span[contains(text(), '" + month + "')]").click();
@@ -51,12 +51,12 @@ public class PaymentPage {
 
     @Step("Нажать на кнопку Оплатить")
     public PaymentPage clickConfirmButton() {
-        paymentSubmitButton.shouldBe(visible, Duration.ofSeconds(10)).click();
+        paymentSubmitButton.shouldBe(visible, Timeouts.DEFAULT).click();
         return this;
     }
 
+    @Step("Проверить успешность оплаты")
     public boolean isPaymentSuccessful() {
-        boolean success = successMessage.shouldBe(visible, Duration.ofSeconds(10)).exists();
-        return success;
+        return successMessage.shouldBe(visible, Timeouts.DEFAULT).exists();
     }
 }

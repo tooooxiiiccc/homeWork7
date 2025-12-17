@@ -1,6 +1,6 @@
 package junit;
 
-import Utils.ConfigReader;
+import utils.ConfigReader;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;

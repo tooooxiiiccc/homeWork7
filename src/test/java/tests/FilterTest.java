@@ -4,6 +4,8 @@ import io.qameta.allure.Step;
 import junit.UITest;
 import org.junit.jupiter.api.Test;
 import steps.AllMoviesPageSteps;
+import utils.FilterData;
+import utils.TestData;
 
 @UITest
 public class FilterTest {
@@ -12,11 +14,13 @@ public class FilterTest {
     @Test
     @Step("Сценарий проверки работы фильтров")
     public void testFilter() {
-        String city = "MSK";
-        String genre = "Криминал";
-        String date = "Новые";
+        FilterData filterData = new FilterData(
+            TestData.FILTER_CITY_MSK,
+            TestData.FILTER_GENRE_CRIME,
+            TestData.FILTER_DATE_NEW
+        );
         allMoviesPageSteps.openAllMoviesPage();
-        allMoviesPageSteps.setFilters(city, genre, date);
-        allMoviesPageSteps.verifyFilters(city, genre, date);
+        allMoviesPageSteps.setFilters(filterData);
+        allMoviesPageSteps.verifyFilters(filterData);
     }
 }

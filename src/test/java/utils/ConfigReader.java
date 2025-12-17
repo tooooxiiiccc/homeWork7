@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import java.io.InputStream;
 import java.util.Properties;

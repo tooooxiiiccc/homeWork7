@@ -2,7 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import java.time.Duration;
+import utils.Timeouts;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -14,42 +14,50 @@ public class AllMoviesPage {
     private SelenideElement selectedGenreText = $x("(//button[@role='combobox'])[2]//span");
     private SelenideElement selectedDateText = $x("(//button[@role='combobox'])[3]//span");
 
-    @Step("Переходим на страницу со всеми фильмами")
+    @Step("Перейти на страницу со всеми фильмами")
     public AllMoviesPage open() {
-        $x("//a[contains(text(), 'Все фильмы')]").shouldBe(visible, Duration.ofSeconds(10)).click();
+        $x("//a[contains(text(), 'Все фильмы')]").shouldBe(visible, Timeouts.DEFAULT).click();
         return this;
     }
 
-    @Step("Выбираем город: ")
+    @Step("Выбрать город: {city}")
     public AllMoviesPage filterCityLocation(String city) {
         moviesFilterLocationSelect
-            .shouldBe(visible, Duration.ofSeconds(10)).click();
+            .shouldBe(visible, Timeouts.DEFAULT).click();
         $x("//div[@role='listbox']//span[contains(text(), '" + city + "')]")
             .shouldBe(visible, enabled).click();
         return this;
     }
 
-    @Step("Выбираем жанр: ")
+    @Step("Выбрать жанр: {genre}")
     public AllMoviesPage filterGenre(String genre) {
         moviesFilterGenreSelect
-            .shouldBe(visible, Duration.ofSeconds(10)).click();
+            .shouldBe(visible, Timeouts.DEFAULT).click();
         $x("//div[@role='listbox']//span[contains(text(), '" + genre + "')]")
             .shouldBe(visible, enabled).click();
         return this;
     }
 
-    @Step("Выбираем дату выхода: ")
+    @Step("Выбрать дату выхода: {createDate}")
     public AllMoviesPage filterDateOfBirth(String createDate) {
         moviesFilterDateAnounce
-            .shouldBe(visible, Duration.ofSeconds(10)).click();
+            .shouldBe(visible, Timeouts.DEFAULT).click();
         $x("//div[@role='listbox']//span[contains(text(), '" + createDate + "')]")
-            .shouldBe(visible, Duration.ofSeconds(10)).click();
+            .shouldBe(visible, Timeouts.DEFAULT).click();
         return this;
     }
 
-    @Step("Выбираем фильм: ")
+    @Step("Выбрать фильм: {movieName}")
     public MoviePage selectMovie(String movieName) {
-        $x("//h3[contains(text(), '" + movieName + "')]").shouldBe(visible, Duration.ofSeconds(10)).click();
+        $x("//a[contains(@data-qa-id, 'movie_more_') and .//h3[contains(text(), '" + movieName + "')]]")
+            .shouldBe(visible, Timeouts.DEFAULT).click();
+        return new MoviePage();
+    }
+
+    @Step("Выбрать первый доступный фильм")
+    public MoviePage selectFirstMovie() {
+        $x("(//a[contains(@data-qa-id, 'movie_more_')])[1]")
+            .shouldBe(visible, Timeouts.DEFAULT).click();
         return new MoviePage();
     }
 
