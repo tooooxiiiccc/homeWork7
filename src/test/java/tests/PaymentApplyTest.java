@@ -2,6 +2,7 @@ package tests;
 
 import junit.UITest;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import steps.AllMoviesPageSteps;
 import steps.MoviePageSteps;
@@ -9,6 +10,7 @@ import steps.PaymentPageSteps;
 import utils.PaymentData;
 
 @UITest
+@Tag("smoke")
 public class PaymentApplyTest {
     private final AllMoviesPageSteps allMoviesPageSteps = new AllMoviesPageSteps();
     private final MoviePageSteps moviePageSteps = new MoviePageSteps();

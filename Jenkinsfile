@@ -60,12 +60,25 @@ pipeline {
                 script {
                     def tagFilter = params.TAG == 'all' ? '' : "-Ptag=${params.TAG}"
                     
+                    echo "Запуск тестов с параметрами:"
+                    echo "  TAG: ${params.TAG}"
+                    echo "  SELENOID_URL: ${SELENOID_URL}"
+                    echo "  BROWSER: ${BROWSER}"
+                    echo "  BROWSER_VERSION: ${BROWSER_VERSION}"
+                    echo "  PARALLEL_THREADS: ${PARALLEL_THREADS}"
+                    
+                    sh """
+                        echo "Проверка доступности Selenoid..."
+                        curl -f ${SELENOID_URL}/status || echo "WARNING: Selenoid может быть недоступен"
+                    """
+                    
                     sh """
                         ./gradlew test ${tagFilter} \
                             -Dselenoid.url=${SELENOID_URL} \
                             -Dbrowser=${BROWSER} \
                             -Dbrowser.version=${BROWSER_VERSION} \
-                            -Dparallel.threads=${PARALLEL_THREADS}
+                            -Dparallel.threads=${PARALLEL_THREADS} \
+                            --info
                     """
                 }
             }
@@ -104,4 +117,5 @@ pipeline {
         }
     }
 }
+
 

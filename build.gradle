@@ -24,8 +24,25 @@ test {
     }
     
     testLogging {
-        events "passed", "skipped", "failed"
+        events "passed", "skipped", "failed", "started"
         exceptionFormat "full"
+        showStandardStreams = true
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        displayGranularity = 2
+    }
+    
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\n=== Test Summary ==="
+            println "Tests found: ${result.testCount}"
+            println "Tests run: ${result.testCount - result.skippedTestCount}"
+            println "Tests passed: ${result.successfulTestCount}"
+            println "Tests failed: ${result.failedTestCount}"
+            println "Tests skipped: ${result.skippedTestCount}"
+            println "===================\n"
+        }
     }
     
     systemProperties += [
