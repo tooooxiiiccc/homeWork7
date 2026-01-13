@@ -27,6 +27,9 @@ public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
             Configuration.browserVersion = System.getProperty("browser.version", "128.0");
             Configuration.headless = true;
             
+            System.setProperty("wdm.chromeDriverVersion", "");
+            System.setProperty("selenide.browser", "chrome");
+            
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("selenoid:options", new HashMap<String, Object>() {{
                 put("enableVNC", true);

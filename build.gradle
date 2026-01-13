@@ -13,7 +13,7 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.27.4'
     testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
     testImplementation 'io.qameta.allure:allure-selenide:2.24.0'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+    // testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
 }
 
 test {
@@ -50,7 +50,10 @@ test {
             'junit.jupiter.execution.parallel.mode.default'            : 'concurrent',
             'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
             'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
-            'junit.jupiter.execution.parallel.config.fixed.parallelism': System.getProperty('parallel.threads', '4')
+            'junit.jupiter.execution.parallel.config.fixed.parallelism': System.getProperty('parallel.threads', '4'),
+            // Отключаем WebDriverManager при использовании remote
+            'wdm.chromeDriverVersion'                                  : '',
+            'wdm.architecture'                                         : ''
     ]
 }
 

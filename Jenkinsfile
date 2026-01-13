@@ -9,7 +9,7 @@ pipeline {
         )
         string(
             name: 'SELENOID_URL',
-            defaultValue: 'http://localhost:4444/wd/hub',
+            defaultValue: 'http://host.docker.internal:4444/wd/hub',
             description: 'URL Selenoid сервера'
         )
         string(
@@ -19,7 +19,7 @@ pipeline {
         )
         string(
             name: 'BROWSER_VERSION',
-            defaultValue: 'latest',
+            defaultValue: '128.0',
             description: 'Версия браузера'
         )
         string(
