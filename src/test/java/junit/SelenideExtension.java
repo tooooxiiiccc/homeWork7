@@ -27,7 +27,7 @@ public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
         if (selenoidUrl != null && !selenoidUrl.isEmpty()) {
             Configuration.remote = selenoidUrl;
             Configuration.browser = System.getProperty("browser", "chrome");
-            Configuration.browserVersion = System.getProperty("browser.version", "latest");
+            Configuration.browserVersion = System.getProperty("browser.version", "128.0");
             Configuration.headless = true;
             
             ChromeOptions chromeOptions = new ChromeOptions();
