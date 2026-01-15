@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.HashMap;
 
 public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
@@ -22,32 +21,36 @@ public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
         Configuration.baseUrl = ConfigReader.getBaseUrl();
         String selenoidUrl = System.getProperty("selenoid.url");
         if (selenoidUrl != null && !selenoidUrl.isEmpty()) {
+            // Отключаем автоматическое управление драйвером для удаленного запуска
+            Configuration.driverManagerEnabled = false;
+            
+            // Настройка удаленного запуска через Selenoid
             Configuration.remote = selenoidUrl;
             Configuration.browser = System.getProperty("browser", "chrome");
-            Configuration.browserVersion = System.getProperty("browser.version", "128.0");
+            String browserVersion = System.getProperty("browser.version", "latest");
+            Configuration.browserVersion = browserVersion;
             Configuration.headless = true;
             
-            System.setProperty("wdm.chromeDriverVersion", "");
-            System.setProperty("selenide.browser", "chrome");
-            
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("selenoid:options", new HashMap<String, Object>() {{
-                put("enableVNC", true);
-                put("enableVideo", false);
-                put("enableLog", true);
-            }});
-            
+            // Настройка ChromeOptions для Selenoid
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-dev-shm-usage");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--window-size=1920,1080");
-            capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
             
-            Configuration.browserCapabilities = capabilities;
+            // Настройка Selenoid options через ChromeOptions
+            HashMap<String, Object> selenoidOptions = new HashMap<>();
+            selenoidOptions.put("enableVNC", true);
+            selenoidOptions.put("enableVideo", false);
+            selenoidOptions.put("enableLog", true);
+            chromeOptions.setCapability("selenoid:options", selenoidOptions);
+            
+            // Применение ChromeOptions к конфигурации
+            Configuration.browserCapabilities = chromeOptions;
         } else {
             Configuration.browser = "chrome";
             Configuration.headless = false;
+            Configuration.driverManagerEnabled = true;
         }
         
         Configuration.browserSize = System.getProperty("browser.size", "1920x1080");
