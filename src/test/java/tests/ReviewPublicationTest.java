@@ -3,12 +3,14 @@ package tests;
 import io.qameta.allure.Step;
 import junit.UITest;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import steps.AllMoviesPageSteps;
 import steps.MoviePageSteps;
 import utils.TestData;
 
 @UITest
+@Tag("regress")
 public class ReviewPublicationTest {
     private final AllMoviesPageSteps allMoviesPageSteps = new AllMoviesPageSteps();
     private final MoviePageSteps moviePageSteps = new MoviePageSteps();

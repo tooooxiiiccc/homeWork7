@@ -9,7 +9,7 @@ pipeline {
         )
         string(
             name: 'SELENOID_URL',
-            defaultValue: 'http://localhost:4444/wd/hub',
+            defaultValue: 'http://selenoid:4444/wd/hub',
             description: 'URL Selenoid сервера'
         )
         string(
@@ -19,7 +19,7 @@ pipeline {
         )
         string(
             name: 'BROWSER_VERSION',
-            defaultValue: 'latest',
+            defaultValue: '128.0',
             description: 'Версия браузера'
         )
         string(
@@ -60,12 +60,26 @@ pipeline {
                 script {
                     def tagFilter = params.TAG == 'all' ? '' : "-Ptag=${params.TAG}"
                     
+                    echo "Запуск тестов с параметрами:"
+                    echo "  TAG: ${params.TAG}"
+                    echo "  SELENOID_URL: ${SELENOID_URL}"
+                    echo "  BROWSER: ${BROWSER}"
+                    echo "  BROWSER_VERSION: ${BROWSER_VERSION}"
+                    echo "  PARALLEL_THREADS: ${PARALLEL_THREADS}"
+                    
+                    sh """
+                        echo "Проверка доступности Selenoid..."
+                        curl -f ${SELENOID_URL}/status || echo "WARNING: Selenoid может быть недоступен"
+                    """
+                    
                     sh """
                         ./gradlew test ${tagFilter} \
                             -Dselenoid.url=${SELENOID_URL} \
+                            -Dselenide.remote=${SELENOID_URL} \
                             -Dbrowser=${BROWSER} \
                             -Dbrowser.version=${BROWSER_VERSION} \
-                            -Dparallel.threads=${PARALLEL_THREADS}
+                            -Dparallel.threads=${PARALLEL_THREADS} \
+                            --info
                     """
                 }
             }
@@ -104,4 +118,5 @@ pipeline {
         }
     }
 }
+
 

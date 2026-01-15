@@ -2,12 +2,14 @@ package tests;
 
 import io.qameta.allure.Step;
 import junit.UITest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import steps.AllMoviesPageSteps;
 import utils.FilterData;
 import utils.TestData;
 
 @UITest
+@Tag("regress")
 public class FilterTest {
     private final AllMoviesPageSteps allMoviesPageSteps = new AllMoviesPageSteps();
 
