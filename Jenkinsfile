@@ -75,6 +75,7 @@ pipeline {
                     sh """
                         ./gradlew test ${tagFilter} \
                             -Dselenoid.url=${SELENOID_URL} \
+                            -Dselenide.remote=${SELENOID_URL} \
                             -Dbrowser=${BROWSER} \
                             -Dbrowser.version=${BROWSER_VERSION} \
                             -Dparallel.threads=${PARALLEL_THREADS} \

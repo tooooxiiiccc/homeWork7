@@ -10,8 +10,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.HashMap;
 
 public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
-    
-    private static boolean configured = false;
 
     @Override
     public void afterEach(ExtensionContext context) {
@@ -20,52 +18,33 @@ public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
 
     @Override
     public void beforeAll(ExtensionContext context) {
-        if (configured) {
-            return;
-        }
-        
         Configuration.baseUrl = ConfigReader.getBaseUrl();
-        String selenoidUrl = System.getProperty("selenoid.url");
+        Configuration.browserSize = System.getProperty("browser.size", "1920x1080");
+        Configuration.timeout = 10000;
         
+        String selenoidUrl = System.getProperty("selenoid.url");
         if (selenoidUrl != null && !selenoidUrl.isEmpty()) {
-            // Устанавливаем системное свойство ДО настройки Configuration
-            // Это гарантирует, что Selenide будет использовать remote WebDriver
-            System.setProperty("selenide.remote", selenoidUrl);
-            
-            // Настройка удаленного запуска через Selenoid
-            // ВАЖНО: remote должен быть установлен ПЕРЕД browser
             Configuration.remote = selenoidUrl;
+            Configuration.browser = System.getProperty("browser", "chrome");
+            Configuration.browserVersion = System.getProperty("browser.version", "latest");
+            Configuration.headless = true;
             
-            // Настройка ChromeOptions для Selenoid
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-dev-shm-usage");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--window-size=1920,1080");
             
-            // Настройка Selenoid options через ChromeOptions
             HashMap<String, Object> selenoidOptions = new HashMap<>();
             selenoidOptions.put("enableVNC", true);
             selenoidOptions.put("enableVideo", false);
             selenoidOptions.put("enableLog", true);
             chromeOptions.setCapability("selenoid:options", selenoidOptions);
             
-            // Применение ChromeOptions к конфигурации ПЕРЕД установкой browser
             Configuration.browserCapabilities = chromeOptions;
-            
-            // Устанавливаем browser ПОСЛЕ remote и capabilities
-            Configuration.browser = System.getProperty("browser", "chrome");
-            String browserVersion = System.getProperty("browser.version", "latest");
-            Configuration.browserVersion = browserVersion;
-            Configuration.headless = true;
         } else {
             Configuration.browser = "chrome";
             Configuration.headless = false;
         }
-        
-        Configuration.browserSize = System.getProperty("browser.size", "1920x1080");
-        Configuration.timeout = 10000;
-        
-        configured = true;
     }
 }
