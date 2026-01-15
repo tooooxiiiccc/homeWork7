@@ -22,7 +22,8 @@ public class SelenideExtension implements BeforeAllCallback, AfterEachCallback {
         Configuration.browserSize = System.getProperty("browser.size", "1920x1080");
         Configuration.timeout = 10000;
         
-        String selenoidUrl = System.getProperty("selenoid.url");
+//        String selenoidUrl = System.getProperty("selenoid.url");
+        String selenoidUrl = "http://selenoid:4444/wd/hub";
         if (selenoidUrl != null && !selenoidUrl.isEmpty()) {
             Configuration.remote = selenoidUrl;
             Configuration.browser = System.getProperty("browser", "chrome");
